@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+    <button mat-button (click)="obtenerAlumnosCasa()">Alumnos</button>
+    <button mat-button ngClass="griff" (click)="obtenerAlumnosCasa('Gryffindor')">Gryffindor</button>
+    <button mat-button ngClass="huffl" (click)="obtenerAlumnosCasa('Hufflepuff')">Hufflepuff</button>
+    <button mat-button ngClass="raven" (click)="obtenerAlumnosCasa('Ravenclaw')">Ravenclaw</button>
+    <button mat-button ngClass="slyth" (click)="obtenerAlumnosCasa('Slytherin')">Slytherin</button>
+</mat-toolbar>
+
+<mat-accordion>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Cantidad de personajes
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-spinner *ngIf="pendingPromise"></mat-spinner>
+
+      <table mat-table [dataSource]="estado$ | async" class="mat-elevation-z8" style="width: 100%" *ngIf="!pendingPromise">
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let estado"> {{estado.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let estado"> {{estado.cantidad}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['estado', 'cantidad']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['estado', 'cantidad']"></tr>
+      </table>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+<mat-grid-list cols="5" rowHeight="100px">
+    <mat-grid-tile *ngFor="let a of alumnos$ | async">
+        <img [src]="!a.image ? 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png' : a.image"
+            ngClass="imagen">
+        <table>
+            <tr>
+                <td>{{a.name}}</td>
+            </tr>
+            <tr>
+                <td>{{a.house}}</td>
+            </tr>
+            <tr>
+                <td><mat-icon *ngIf="!a.alive">remove</mat-icon></td>
+            </tr>
+        </table>
+    </mat-grid-tile>
+</mat-grid-list>
