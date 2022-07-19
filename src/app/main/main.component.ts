@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { Alumno, Estado } from '../alumno';
 
 @Component({
@@ -9,7 +9,7 @@ import { Alumno, Estado } from '../alumno';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-
+  subscripcion!: Subscription;
   alumnos$!: Observable<any>;
   estado$!: Promise<any>;
 
@@ -19,20 +19,22 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient) { }
 
-  ngOnDestroy(): void {
-  }
-
   ngOnInit(): void {
     this.obtenerAlumnosCasa();
+    this.subscripcion = this.alumnos$.subscribe(x => console.log(x));
+  }
+
+  ngOnDestroy(): void {
+    this.subscripcion.unsubscribe();
   }
 
   obtenerAlumnosCasa(casa?: string){
-    console.log('Obtener alumnos ' + !casa ? '' : 'de ' + casa);
+    console.log('Obtener alumnos ' + (!casa ? '' : 'de ' + casa));
 
     this.alumnos$ = this.http.get<any>(this.URL)
       .pipe(
         map(x => 
-            x.filter((a: Alumno) => !casa || a.house == casa)) ,
+            x.filter((a: Alumno) => !casa || a.house == (casa == '-' ? '' : casa ))) ,
         tap(alumnos => this.obtenerEstados(alumnos))       
       );
   }

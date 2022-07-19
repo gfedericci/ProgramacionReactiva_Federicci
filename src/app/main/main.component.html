@@ -1,9 +1,10 @@
 <mat-toolbar color="primary">
     <button mat-button (click)="obtenerAlumnosCasa()">Alumnos</button>
-    <button mat-button ngClass="griff" (click)="obtenerAlumnosCasa('Gryffindor')">Gryffindor</button>
-    <button mat-button ngClass="huffl" (click)="obtenerAlumnosCasa('Hufflepuff')">Hufflepuff</button>
-    <button mat-button ngClass="raven" (click)="obtenerAlumnosCasa('Ravenclaw')">Ravenclaw</button>
-    <button mat-button ngClass="slyth" (click)="obtenerAlumnosCasa('Slytherin')">Slytherin</button>
+    <button mat-raised-button ngClass="griff" (click)="obtenerAlumnosCasa('Gryffindor')">Gryffindor</button>
+    <button mat-raised-button ngClass="huffl" (click)="obtenerAlumnosCasa('Hufflepuff')">Hufflepuff</button>
+    <button mat-raised-button ngClass="raven" (click)="obtenerAlumnosCasa('Ravenclaw')">Ravenclaw</button>
+    <button mat-raised-button ngClass="slyth" (click)="obtenerAlumnosCasa('Slytherin')">Slytherin</button>
+    <button mat-raised-button (click)="obtenerAlumnosCasa('-')">Otros</button>
 </mat-toolbar>
 
 <mat-accordion>
